@@ -1,0 +1,18 @@
+.carousel-cars {
+  height: 41rem;
+  width: 40rem;
+  object-fit: cover;
+  position: relative;
+  top: auto;
+  transition: transform 0.5s, filter 0.5s ease-in-out;
+}
+
+.carousel:hover img {
+  filter: brightness(50%);
+  transform-origin: 50% 50%;
+}
+
+.image-title,
+.image-text {
+  color: #f2aa4cff;
+}

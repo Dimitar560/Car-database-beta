@@ -1,0 +1,30 @@
+.extra-details {
+  background: linear-gradient(90deg, #101820ff 50%, #f2aa4cff 50%);
+  padding: 5%;
+}
+
+.extra-title {
+  color: #f2aa4cff;
+  text-align: center;
+  padding-bottom: 5%;
+}
+
+.other-side {
+  color: #101820ff;
+}
+
+.extra-image {
+  width: 35%;
+  display: inline-block;
+  position: relative;
+  left: 4%;
+}
+
+.extra-text {
+  display: inline-block;
+  position: relative;
+  width: 40%;
+  left: 23%;
+  text-align: left;
+  color: #101820ff;
+}

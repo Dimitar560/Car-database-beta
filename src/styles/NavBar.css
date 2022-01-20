@@ -1,0 +1,39 @@
+#navibar {
+  height: 6rem;
+  background-color: #101820ff;
+}
+
+.brand {
+  font-size: 3rem;
+  color: #f2aa4cff;
+  display: inline-block;
+  padding: 1%;
+  cursor: default;
+  transition: ease-in-out 1s;
+}
+
+.brand:hover {
+  color: #fff;
+  transform-origin: 50% 50%;
+}
+
+.link {
+  font-size: 1.5rem;
+  color: #f2aa4cff;
+  position: relative;
+  left: 47%;
+  text-decoration: none;
+  padding: 1% 1%;
+}
+
+.link:hover,
+.link:active {
+  text-decoration: underline 3px solid #f2aa4cff;
+  text-underline-offset: 5px;
+  transition: linear 1s;
+  color: #fff;
+}
+
+.active {
+  color: #fff;
+}

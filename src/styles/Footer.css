@@ -1,0 +1,44 @@
+.footer {
+  background-color: #101820ff;
+  padding: 2%;
+}
+
+.footer-text-copyright {
+  color: #f2aa4cff;
+  display: inline-block;
+  position: relative;
+  left: 44%;
+}
+
+.footer-text-contact {
+  color: #f2aa4cff;
+  display: inline-block;
+  position: relative;
+  left: 78%;
+}
+
+.footer-icon-1,
+.footer-icon-2,
+.footer-icon-3 {
+  position: relative;
+  left: 87%;
+  padding-left: 1%;
+}
+
+.footer-icon-1,
+.footer-icon-2,
+.footer-icon-3 {
+  filter: opacity(0.5) drop-shadow(0 0 0 #f2aa4cff);
+}
+
+.footer-icon-1:hover {
+  filter: opacity(0.5) drop-shadow(0 0 0 blue);
+}
+
+.footer-icon-2:hover {
+  filter: opacity(0.5) drop-shadow(0 0 0 rgb(255, 0, 221));
+}
+
+.footer-icon-3:hover {
+  filter: opacity(0.5) drop-shadow(0 0 0 rgb(0, 162, 255));
+}

@@ -1,0 +1,41 @@
+.postauto-form {
+  margin: 7% 25% 13% 33%;
+}
+
+.postauto-form input {
+  width: 33.5rem;
+  outline: none;
+  background-color: #101820ff;
+  color: #f2aa4cff;
+}
+
+.postauto-form textarea {
+  outline: none;
+  background-color: #101820ff;
+  color: #f2aa4cff;
+  resize: none;
+}
+
+.postauto-form label {
+  color: #101820ff;
+}
+
+.postauto-form button {
+  background-color: #101820ff;
+  color: #f2aa4cff;
+  border-radius: 30%;
+  position: relative;
+  left: 34%;
+  top: 1rem;
+  width: 5rem;
+  outline: none;
+  height: 2.5rem;
+  border: #f2aa4cff 1px thin;
+}
+
+.postauto-form button:hover,
+.postauto-form button:active {
+  background-color: rgb(32, 30, 27);
+  color: rgb(231, 180, 112);
+  border: #101820ff 1px thin;
+}
