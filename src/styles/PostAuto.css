@@ -2,7 +2,7 @@
   margin: 7% 25% 13% 33%;
 }
 
-.postauto-form input {
+.input-text {
   width: 33.5rem;
   outline: none;
   background-color: #101820ff;
@@ -31,6 +31,21 @@
   outline: none;
   height: 2.5rem;
   border: #f2aa4cff 1px thin;
+}
+
+.form-from-to {
+  margin-top: 3%;
+  width: 11.5rem;
+  margin-left: 2%;
+  margin-right: 2%;
+  outline: none;
+  background-color: #101820ff;
+  color: #f2aa4cff;
+}
+
+.form-checkbox-label {
+  margin-top: 2%;
+  padding-left: 2%;
 }
 
 .postauto-form button:hover,

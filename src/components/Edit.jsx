@@ -2,9 +2,15 @@ import axios from "axios";
 import { Fragment, useRef } from "react";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
-import "../styles/PostAuto.css";
+import { useNavigate, useParams } from "react-router-dom";
+import useFetch from "../hooks/useFetch";
 
-const PostAuto = () => {
+const Edit = () => {
+  const { title } = useParams();
+  const { data } = useFetch(`http://localhost:8000/database/${title}`);
+
+  const navigate = useNavigate();
+
   const srcRef = useRef();
   const titleRef = useRef();
   const shortDescRef = useRef();
@@ -21,10 +27,13 @@ const PostAuto = () => {
   const minivanRef = useRef();
   const pickupRef = useRef();
 
-  const addCarHandler = (car) => {
-    axios.post("http://localhost:8000/database", JSON.stringify(car), {
-      headers: { "Content-Type": "application/json" },
-    });
+  const patchAuto = (car) => {
+    axios
+      .patch(`http://localhost:8000/database/${title}`, JSON.stringify(car), {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((res) => res.data)
+      .finally(() => navigate("/database"));
   };
 
   const formSubmit = (e) => {
@@ -47,29 +56,13 @@ const PostAuto = () => {
       minivan: minivanRef.current.checked,
       pickup: pickupRef.current.checked,
     };
-    addCarHandler(cars);
-
-    srcRef.current.value = "";
-    titleRef.current.value = "";
-    shortDescRef.current.value = "";
-    priceFromRef.current.value = "";
-    priceToRef.current.value = "";
-    petrolRef.current.checked = false;
-    dieselRef.current.checked = false;
-    electricRef.current.checked = false;
-    sedanRef.current.checked = false;
-    coupeRef.current.checked = false;
-    wagonRef.current.checked = false;
-    hatchbackRef.current.checked = false;
-    suvRef.current.checked = false;
-    minivanRef.current.checked = false;
-    pickupRef.current.checked = false;
+    patchAuto(cars);
   };
 
   return (
     <Fragment>
       <NavBar />
-      <h2>Post form</h2>
+      <h2>Edit form</h2>
       <form className="postauto-form" onSubmit={formSubmit}>
         <label htmlFor="title">Auto Name</label>
         <br />
@@ -79,6 +72,7 @@ const PostAuto = () => {
           id="title"
           ref={titleRef}
           placeholder="Type..."
+          defaultValue={data.title}
           required
         />
         <br />
@@ -90,6 +84,7 @@ const PostAuto = () => {
           cols="70"
           ref={shortDescRef}
           placeholder="Type..."
+          defaultValue={data.shortDesc}
           required
         />
         <br />
@@ -101,6 +96,7 @@ const PostAuto = () => {
           id="src"
           ref={srcRef}
           placeholder="Type..."
+          defaultValue={data.src}
           required
         />
         <br />
@@ -111,6 +107,7 @@ const PostAuto = () => {
           id="priceFrom"
           placeholder="Type..."
           ref={priceFromRef}
+          defaultValue={data.priceFrom}
           required
         />
         <label htmlFor="priceTo">To</label>
@@ -120,6 +117,7 @@ const PostAuto = () => {
           id="priceTo"
           placeholder="Type..."
           ref={priceToRef}
+          defaultValue={data.priceTo}
           required
         />
         <br />
@@ -228,11 +226,11 @@ const PostAuto = () => {
           Pickup truck
         </label>
         <br />
-        <button type="submit">Add</button>
+        <button type="submit">Edit</button>
       </form>
       <Footer />
     </Fragment>
   );
 };
 
-export default PostAuto;
+export default Edit;

@@ -1,0 +1,29 @@
+.userForm {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 8% 35%;
+  background-color: #101820ff;
+  color: #f2aa4cff;
+  box-shadow: rgba(16, 24, 32, 0.349) 0.5rem 0.6rem;
+  border-radius: 20%;
+  padding-bottom: 2%;
+}
+
+.userForm input {
+  margin-bottom: 5%;
+}
+
+.userForm label {
+  margin-bottom: 1%;
+  font-size: 1.3em;
+}
+
+.userForm h3 {
+  padding-top: 3%;
+}
+
+.wrong-input {
+  background-color: rgba(231, 105, 105, 0.671);
+}
