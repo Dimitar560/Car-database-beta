@@ -37,3 +37,69 @@
 .active {
   color: #fff;
 }
+
+.logout-button {
+  position: relative;
+  color: #101820ff;
+  background-color: #f2aa4cff;
+  border-radius: 30%;
+  width: 5rem;
+  outline: none;
+  height: 2.5rem;
+}
+
+.logout-button:hover,
+.logout-button:active {
+  background-color: rgb(230, 161, 59);
+  color: rgb(51, 46, 40);
+  border: rgb(199, 164, 51) 1px thin;
+}
+
+@media (max-width: 600px) {
+  #navibar {
+    display: grid;
+    grid-template-areas:
+      "title title title logout"
+      "nav1 nav2 nav3 nav4";
+    height: 6rem;
+    background-color: #101820ff;
+  }
+
+  .brand {
+    font-size: 2rem;
+    color: #f2aa4cff;
+    grid-area: title;
+    cursor: default;
+    transition: ease-in-out 1s;
+  }
+
+  .link {
+    font-size: 1.5rem;
+    color: #f2aa4cff;
+    text-decoration: none;
+    left: 0;
+  }
+  .active {
+    color: #fff;
+  }
+
+  .logout-button {
+    grid-area: logout;
+  }
+
+  .link:nth-child(1) {
+    grid-area: nav4;
+  }
+  .link:nth-child(2) {
+    grid-area: nav1;
+  }
+  .link:nth-child(3) {
+    grid-area: nav2;
+  }
+  .link:nth-child(4) {
+    grid-area: nav3;
+  }
+  .link:nth-child(5) {
+    grid-area: nav4;
+  }
+}

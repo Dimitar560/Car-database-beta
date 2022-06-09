@@ -1,6 +1,6 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import NavBar from "./NavBar";
-import Footer from "./Footer";
+// import Footer from "./Footer";
 import axios from "axios";
 import "../styles/DataBase.css";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
@@ -13,24 +13,26 @@ const DataBase = () => {
   const navigate = useNavigate();
   const [filtredResult, setFiltredResult] = useState([]);
   const [searchInput, setSearchInput] = useState("");
+  const [filterCar, setFilterCar] = useState("");
+  // const [notFound, setNotFound] = useState("");
+  // const [isDeleted,setIsDeleted] = useState([])
 
   const { data, loading } = useFetch("http://localhost:8000/database");
 
   const deleteAuto = (title) => {
     axios
       .delete(`http://localhost:8000/database/${title}`)
-      .then((res) => res.data)
-      .finally(() => navigate("/database"));
+      .then((res) => res.data, alert("Dealeted sucsesfully"), navigate("/"));
+    // .finally(navigate("/database"));
   };
 
-  const searchItems = (searchValue) => {
-    setSearchInput(searchValue);
-    if (searchInput !== "") {
+  const selectedData = (data, input) => {
+    if (input !== "") {
       const filteredData = data.filter((item) => {
         return Object.values(item)
           .join("")
           .toLowerCase()
-          .includes(searchInput.toLowerCase());
+          .includes(input.toLowerCase());
       });
       setFiltredResult(filteredData);
     } else {
@@ -38,19 +40,41 @@ const DataBase = () => {
     }
   };
 
+  useEffect(() => {
+    selectedData(data, searchInput);
+  }, [data, searchInput]);
+
+  useEffect(() => {
+    selectedData(data, filterCar);
+  }, [data, filterCar]);
+
   return (
     <Fragment>
       <NavBar />
-      <h1>Database</h1>
-      <input
-        type="text"
-        placeholder="Search here"
-        onChange={(e) => searchItems(e.target.value)}
-      />
+      <h1 className="title-label">Database</h1>
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Search here"
+          className="search-input"
+          onChange={(e) => setSearchInput(e.target.value)}
+        />
+        <select
+          className="search-drop"
+          onChange={(e) => setFilterCar(e.target.value)}
+        >
+          <option value="">All</option>
+          <option value="Mazda">Mazda</option>
+          <option value="subaru">Subaru</option>
+          <option value="alfa romeo">Alfa Romeo</option>
+        </select>
+      </div>
+
       {loading && <p>Loading...</p>}
+
       {!loading && (
         <Row xs={1} md={2} lg={4} className="g-0">
-          {searchInput.length > 1
+          {searchInput.length > 1 || filterCar.length > 1
             ? filtredResult.map((cars) => {
                 return (
                   <Col key={cars._id}>
@@ -137,8 +161,9 @@ const DataBase = () => {
               })}
         </Row>
       )}
+
       <Outlet />
-      <Footer />
+      {/* <Footer /> */}
     </Fragment>
   );
 };

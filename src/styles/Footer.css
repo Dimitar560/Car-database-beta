@@ -1,6 +1,6 @@
 .footer {
   background-color: #101820ff;
-  padding: 2%;
+  /* padding: 2%; */
 }
 
 .footer-text-copyright {
@@ -8,14 +8,15 @@
   display: inline-block;
   position: relative;
   left: 44%;
+  padding-top: 2%;
 }
 
-.footer-text-contact {
+/* .footer-text-contact {
   color: #f2aa4cff;
   display: inline-block;
   position: relative;
   left: 78%;
-}
+} */
 
 .footer-icon-1,
 .footer-icon-2,
@@ -23,6 +24,7 @@
   position: relative;
   left: 85%;
   padding-left: 1%;
+  padding-bottom: 2%;
 }
 
 .footer-icon-1,
@@ -41,4 +43,22 @@
 
 .footer-icon-3:hover {
   filter: opacity(0.5) drop-shadow(0 0 0 rgb(0, 162, 255));
+}
+
+@media (max-width: 600px) {
+  .footer-icon-1,
+  .footer-icon-2,
+  .footer-icon-3 {
+    left: 40%;
+    padding-left: 1%;
+    padding-bottom: 11%;
+  }
+
+  .footer-text-copyright {
+    color: #f2aa4cff;
+    display: inline-block;
+    position: relative;
+    left: 35%;
+    padding-top: 2%;
+  }
 }

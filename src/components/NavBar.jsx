@@ -39,7 +39,7 @@ const NavBar = () => {
         </NavLink>
       )}
       {isAuth && (
-        <button type="submit" onClick={logoutHandler}>
+        <button className="logout-button" type="submit" onClick={logoutHandler}>
           Logout
         </button>
       )}

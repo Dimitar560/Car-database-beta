@@ -12,6 +12,7 @@ import UserForm from "./components/UserForm";
 import { useSelector } from "react-redux";
 import Edit from "./components/Edit";
 import ErrorPage from "./components/ErrorPage";
+import SpecialLogin from "./components/SpecialLogin";
 
 // import DataBasePage from "./pages/DataBasePage";
 
@@ -28,6 +29,7 @@ function App() {
         <Route path="userform" element={<UserForm />} />
         {isAuth && <Route path="database/update/:title" element={<Edit />} />}
         <Route path="*" element={<ErrorPage />} />
+        <Route path="specialLogin" element={<SpecialLogin />} />
       </Routes>
     </Fragment>
   );

@@ -10,7 +10,7 @@ const Footer = () => {
   return (
     <footer className="footer">
       <p className="footer-text-copyright">Copyright &copy; D.C {year}</p>
-      <p className="footer-text-contact">Contact us</p>
+      {/* <p className="footer-text-contact">Contact us</p> */}
       <br />
       <img className="footer-icon-1" src={facebookIcon} alt="facebookIcon" />
       <img className="footer-icon-2" src={instagramIcon} alt="facebookIcon" />

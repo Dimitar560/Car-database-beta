@@ -35,10 +35,10 @@ const SelectBrand = () => {
         ));
       } else if (e.target.value === "audi") {
         return (cars = (
-          <img className="img-selected" src={audiImg} alt="opel" />
+          <img className="img-selected" src={audiImg} alt="audi" />
         ));
       } else if (e.target.value === "vw") {
-        return (cars = <img className="img-selected" src={vwImg} alt="opel" />);
+        return (cars = <img className="img-selected" src={vwImg} alt="vw" />);
       }
     });
     // });

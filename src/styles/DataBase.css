@@ -7,6 +7,25 @@
   border-radius: 3%;
 }
 
+.title-label {
+  text-align: center;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2%;
+}
+
+.search-input,
+.search-drop {
+  background-color: #101820ff;
+  color: #f2aa4cff;
+  outline: none;
+}
+
 .database-title {
   position: relative;
   display: inline-block;

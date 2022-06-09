@@ -1,48 +1,103 @@
 .detail-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas:
+    "title title price price"
+    "image des des des"
+    "type1 info1 info2 info3"
+    "type2 info4 info5 info6"
+    "info7 info8 info9 info10";
   margin: 1% 1%;
   background-color: #101820ff;
   color: #f2aa4cff;
-  display: flex;
-  flex-flow: row wrap;
 }
 
 .detailed-text {
-  justify-content: flex-end;
-  align-items: flex-end;
-  width: 70%;
-  padding-left: 2%;
   font-size: 1.5rem;
+  grid-area: des;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 5%;
 }
 
 .detailed-image {
-  order: -1;
+  grid-area: image;
 }
 
 .detailed-title {
-  width: 100%;
-  text-align: center;
-  order: -2;
-  padding-bottom: 2%;
+  grid-area: title;
+  align-self: center;
   font-size: 2.5rem;
+  padding-left: 7%;
 }
 
 .detailed-price {
-  width: 100%;
-  margin-left: 1%;
-  margin-right: 1%;
+  grid-area: price;
+  align-self: center;
 }
 
 .detailed-green {
   color: green;
 }
 
-.detailed-engine {
-  order: 1;
-  margin-left: 1%;
-  margin-right: 1%;
+.detailed-engine1 {
+  grid-area: info1;
+}
+.detailed-engine1 {
+  grid-area: info2;
+}
+.detailed-engine1 {
+  grid-area: info3;
 }
 
-.detailed-type {
-  margin-left: 1%;
-  margin-right: 1%;
+.detailed-type1 {
+  grid-area: info4;
+}
+.detailed-type2 {
+  grid-area: info5;
+}
+.detailed-type3 {
+  grid-area: info6;
+}
+.detailed-type4 {
+  grid-area: info7;
+}
+.detailed-type5 {
+  grid-area: info8;
+}
+.detailed-type6 {
+  grid-area: info9;
+}
+.detailed-type7 {
+  grid-area: info10;
+}
+
+.detailed-desc {
+  grid-area: type1;
+}
+
+.detailed-desc2 {
+  grid-area: type2;
+}
+
+@media (max-width: 600px) {
+  .detail-section {
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    grid-template-areas:
+      "title title"
+      "price price"
+      "image image"
+      "des des"
+      "type1 info1"
+      "info2 info3"
+      "type2 info4"
+      "info5 info6"
+      "info7 info8"
+      "info9 info10";
+  }
+  .detailed-title {
+    padding: 0%;
+  }
 }

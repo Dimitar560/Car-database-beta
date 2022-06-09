@@ -62,7 +62,7 @@ const Edit = () => {
   return (
     <Fragment>
       <NavBar />
-      <h2>Edit form</h2>
+      <h2 className="title-label">Edit form</h2>
       <form className="postauto-form" onSubmit={formSubmit}>
         <label htmlFor="title">Auto Name</label>
         <br />

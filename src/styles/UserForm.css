@@ -27,3 +27,28 @@
 .wrong-input {
   background-color: rgba(231, 105, 105, 0.671);
 }
+
+.login-button {
+  position: relative;
+  color: #101820ff;
+  background-color: #f2aa4cff;
+  border-radius: 30%;
+  width: 10rem;
+  outline: none;
+  height: 2.7rem;
+}
+
+.login-button:hover,
+.login-button:active {
+  background-color: rgb(230, 161, 59);
+  color: rgb(51, 46, 40);
+  border: rgb(199, 164, 51) 1px thin;
+}
+
+@media (max-width: 600px) {
+  .userForm {
+    margin: 25% auto 0 auto;
+
+    width: 80%;
+  }
+}

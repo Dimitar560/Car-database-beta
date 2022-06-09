@@ -5,6 +5,7 @@ const app = express();
 const session = require("express-session");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
+// const multer = require("multer");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -13,6 +14,15 @@ app.use(
     credentials: true,
   })
 );
+
+// const multerStorage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, "Cars");
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, new Date().toISOString() + "-" + file.originalname);
+//   },
+// });
 
 main().catch((err) => console.log(err));
 
@@ -28,7 +38,7 @@ app.use(
     cookie: {},
   })
 );
-
+// app.use(multer({ storage: multerStorage }).single("src"));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -55,14 +65,26 @@ const userSchema = new mongoose.Schema({
   password: String,
 });
 
+// const specialUserSchema = new mongoose.Schema({
+//   username: String,
+//   passport: String,
+//   workplace: String,
+// });
+
 userSchema.plugin(passportLocalMongoose);
+// specialUserSchema.plugin(passportLocalMongoose);
 
 const Cars = mongoose.model("Cars", autoSchema);
 const User = mongoose.model("User", userSchema);
+// const SpecialUser = mongoose.model("SpecialUser", specialUserSchema);
 
 passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+// passport.use(SpecialUser.createStrategy());
+// passport.serializeUser(SpecialUser.serializeUser());
+// passport.deserializeUser(SpecialUser.deserializeUser());
 
 app
   .route("/database")
@@ -108,9 +130,9 @@ app
     });
   })
   .delete((req, res) => {
-    Cars.deleteOne({ title: req.params.title }, (err) => {
+    Cars.deleteOne({ title: req.params.title }, (err, car) => {
       if (!err) {
-        res.send("Deleted");
+        res.send("Deleted" + car);
       } else {
         res.send(err);
       }
@@ -151,6 +173,22 @@ app.route("/register").post((req, res) => {
   );
 });
 
+// app.route("/specialRegister").post((req, res) => {
+//   SpecialUser.register(
+//     { username: req.body.username, workplace: req.body.workplace },
+//     req.body.password,
+//     (err, user) => {
+//       if (err) {
+//         throw err;
+//       }
+//       if (!user) {
+//         passport.authenticate("local");
+//         console.log("Saved");
+//       }
+//     }
+//   );
+// });
+
 app.post("/login", passport.authenticate("local"), function (req, res) {
   const user = new User({
     username: req.body.username,
@@ -164,6 +202,21 @@ app.post("/login", passport.authenticate("local"), function (req, res) {
     }
   });
 });
+
+// app.post("/specialLogin", passport.authenticate("local"), function (req, res) {
+//   const specialUser = new SpecialUser({
+//     username: req.body.username,
+//     password: req.body.password,
+//     worksplace: req.body.workplace,
+//   });
+//   req.login(specialUser, function (err) {
+//     if (err) {
+//       res.send(err);
+//     } else {
+//       res.send(specialUser);
+//     }
+//   });
+// });
 
 const Port = process.env.Port || 8000;
 

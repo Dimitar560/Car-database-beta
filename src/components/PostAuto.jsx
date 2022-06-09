@@ -69,7 +69,7 @@ const PostAuto = () => {
   return (
     <Fragment>
       <NavBar />
-      <h2>Post form</h2>
+      <h2 className="title-label">Post form</h2>
       <form className="postauto-form" onSubmit={formSubmit}>
         <label htmlFor="title">Auto Name</label>
         <br />
