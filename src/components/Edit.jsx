@@ -1,7 +1,6 @@
 import axios from "axios";
 import { Fragment, useRef } from "react";
 import NavBar from "./NavBar";
-import Footer from "./Footer";
 import { useNavigate, useParams } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 
@@ -32,7 +31,7 @@ const Edit = () => {
       .patch(`http://localhost:8000/database/${title}`, JSON.stringify(car), {
         headers: { "Content-Type": "application/json" },
       })
-      .then((res) => res.data)
+      .then((res) => res.data, alert("Data edited"))
       .finally(() => navigate("/database"));
   };
 
@@ -228,7 +227,6 @@ const Edit = () => {
         <br />
         <button type="submit">Edit</button>
       </form>
-      <Footer />
     </Fragment>
   );
 };

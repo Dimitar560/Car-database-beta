@@ -1,6 +1,5 @@
 import { Fragment, useState, useEffect } from "react";
 import NavBar from "./NavBar";
-// import Footer from "./Footer";
 import axios from "axios";
 import "../styles/DataBase.css";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
@@ -22,8 +21,7 @@ const DataBase = () => {
   const deleteAuto = (title) => {
     axios
       .delete(`http://localhost:8000/database/${title}`)
-      .then((res) => res.data, alert("Dealeted sucsesfully"), navigate("/"));
-    // .finally(navigate("/database"));
+      .then((res) => res.data, alert("Deleted successfully"), navigate("/"));
   };
 
   const selectedData = (data, input) => {

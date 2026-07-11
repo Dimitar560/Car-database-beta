@@ -28,12 +28,19 @@ const UserForm = () => {
     const enteredPassword = passwordInputRef.current.value;
 
     let url;
-
+    let okMessage;
+    let errorMessage;
     setLoading(true);
+
     if (isLogin) {
       url = "http://localhost:8000/login";
+      okMessage = "Logged in successfully";
+      errorMessage = "Wrong password or username";
     } else {
       url = "http://localhost:8000/register";
+      okMessage = "Registred successfully";
+      errorMessage = "Existing user found";
+      setLoading(false);
     }
     axios
       .post(
@@ -52,11 +59,11 @@ const UserForm = () => {
         if (res.status === 200) {
           dispatch(authActions.login());
           console.log(res);
-          alert("Logged in successfully");
+          alert(okMessage);
           navigate("/");
         } else {
           dispatch(authActions.logout());
-          alert("Wrong password or username");
+          alert(errorMessage);
           setLoading(false);
         }
       })
@@ -65,6 +72,10 @@ const UserForm = () => {
           console.error(err);
         }
       });
+
+    if (!isLogin) {
+      alert("Registred");
+    }
 
     usernameInputRef.current.value = "";
     passwordInputRef.current.value = "";

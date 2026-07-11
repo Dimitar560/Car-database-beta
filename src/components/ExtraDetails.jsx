@@ -15,15 +15,15 @@ const ExtraDetails = () => {
         alt="mustang"
       />
       <p className="extra-text">
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's standard dummy text ever
-        since the 1500s, when an unknown printer took a galley of type and
-        scrambled it to make a type specimen book. It has survived not only five
-        centuries, but also the leap into electronic typesetting, remaining
-        essentially unchanged. It was popularised in the 1960s with the release
-        of Letraset sheets containing Lorem Ipsum passages, and more recently
-        with desktop publishing software like Aldus PageMaker including versions
-        of Lorem Ipsum.
+        A classic car is an older car, typically 25 years or older, though
+        definitions vary. The common theme is of an older car of historical
+        interest to be collectible and tend to be restored rather than scrapped.
+        Classic cars are a subset of a broader category of "collector cars". A
+        subset of what is considered classic cars are known as antique cars or
+        vintage cars Organizations such as the Classic Car Club of America
+        maintain lists of eligible unmodified cars that are called "classic".
+        These are described as "fine" or "distinctive" automobile, either
+        American or foreign built, produced between 1915 and 1948.
       </p>
     </section>
   );

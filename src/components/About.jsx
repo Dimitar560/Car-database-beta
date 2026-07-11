@@ -6,7 +6,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "../styles/About.css";
-import Footer from "./Footer";
+
 import SwiperCore, { Parallax, Pagination, Navigation } from "swiper";
 
 const About = () => {
@@ -14,7 +14,7 @@ const About = () => {
   return (
     <Fragment>
       <NavBar />
-      <h1>About Page</h1>;
+
       <Swiper
         style={{
           "--swiper-navigation-color": "#101820ff",
@@ -34,63 +34,47 @@ const About = () => {
         ></div>
         <SwiperSlide>
           <div className="title" data-swiper-parallax="-300">
-            Slide 1
+            We want to develop with your help
           </div>
           <div className="subtitle" data-swiper-parallax="-200">
-            Subtitle
+            Join our community
           </div>
           <div className="text" data-swiper-parallax="-100">
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-              dictum mattis velit, sit amet faucibus felis iaculis nec. Nulla
-              laoreet justo vitae porttitor porttitor. Suspendisse in sem justo.
-              Integer laoreet magna nec elit suscipit, ac laoreet nibh euismod.
-              Aliquam hendrerit lorem at elit facilisis rutrum. Ut at
-              ullamcorper velit. Nulla ligula nisi, imperdiet ut lacinia nec,
-              tincidunt ut libero. Aenean feugiat non eros quis feugiat.
+              This group's mission is to create a global community of diverse
+              individuals who will support, challenge, and inspire one another
+              by providing a platform for networking, mentorship, and career
+              development. We encourage you to share your knowledge, ask
+              questions, participate in discussions and become an integral part
+              of this little community. Together we can become better community
+              leaders and provide our members with a much better experience.
             </p>
           </div>
         </SwiperSlide>
         <SwiperSlide>
           <div className="title" data-swiper-parallax="-300">
-            Slide 2
+            Current location
           </div>
           <div className="subtitle" data-swiper-parallax="-200">
-            Subtitle
+            Sofia,Bulgaria
           </div>
           <div className="text" data-swiper-parallax="-100">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-              dictum mattis velit, sit amet faucibus felis iaculis nec. Nulla
-              laoreet justo vitae porttitor porttitor. Suspendisse in sem justo.
-              Integer laoreet magna nec elit suscipit, ac laoreet nibh euismod.
-              Aliquam hendrerit lorem at elit facilisis rutrum. Ut at
-              ullamcorper velit. Nulla ligula nisi, imperdiet ut lacinia nec,
-              tincidunt ut libero. Aenean feugiat non eros quis feugiat.
-            </p>
+            <p>Before the way to the airport</p>
           </div>
         </SwiperSlide>
         <SwiperSlide>
           <div className="title" data-swiper-parallax="-300">
-            Slide 3
+            Contacts
           </div>
           <div className="subtitle" data-swiper-parallax="-200">
-            Subtitle
+            Find us at:
           </div>
           <div className="text" data-swiper-parallax="-100">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-              dictum mattis velit, sit amet faucibus felis iaculis nec. Nulla
-              laoreet justo vitae porttitor porttitor. Suspendisse in sem justo.
-              Integer laoreet magna nec elit suscipit, ac laoreet nibh euismod.
-              Aliquam hendrerit lorem at elit facilisis rutrum. Ut at
-              ullamcorper velit. Nulla ligula nisi, imperdiet ut lacinia nec,
-              tincidunt ut libero. Aenean feugiat non eros quis feugiat.
-            </p>
+            <p>Phone: +359 87 888 8888 </p>
+            <p>Email: OurFirm@email.com</p>
           </div>
         </SwiperSlide>
       </Swiper>
-      <Footer />
     </Fragment>
   );
 };

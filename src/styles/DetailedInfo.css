@@ -81,6 +81,17 @@
   grid-area: type2;
 }
 
+.detailed-desc,
+.detailed-desc2,
+.detailed-engine1,
+.detailed-engine2,
+.detailed-engine3,
+.detailed-type1,
+.detailed-type2,
+.detailed-type3 {
+  margin-top: 2rem;
+}
+
 @media (max-width: 600px) {
   .detail-section {
     grid-template-columns: 1fr 1fr;

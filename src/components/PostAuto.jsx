@@ -1,7 +1,6 @@
 import axios from "axios";
 import { Fragment, useRef } from "react";
 import NavBar from "./NavBar";
-import Footer from "./Footer";
 import "../styles/PostAuto.css";
 
 const PostAuto = () => {
@@ -25,6 +24,7 @@ const PostAuto = () => {
     axios.post("http://localhost:8000/database", JSON.stringify(car), {
       headers: { "Content-Type": "application/json" },
     });
+    alert("Data posted");
   };
 
   const formSubmit = (e) => {
@@ -230,7 +230,6 @@ const PostAuto = () => {
         <br />
         <button type="submit">Add</button>
       </form>
-      <Footer />
     </Fragment>
   );
 };

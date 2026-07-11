@@ -15,15 +15,6 @@ app.use(
   })
 );
 
-// const multerStorage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, "Cars");
-//   },
-//   filename: function (req, file, cb) {
-//     cb(null, new Date().toISOString() + "-" + file.originalname);
-//   },
-// });
-
 main().catch((err) => console.log(err));
 
 async function main() {
