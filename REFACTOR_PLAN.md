@@ -169,3 +169,4 @@ Do not implement any of these; they are planned as separate tasks after the refa
 - **Image upload** (multer or cloud storage) — images stay URL strings for now.
 - **Visual redesign** + replace `alert()` with toasts.
 - **Deployment** (hosting, Atlas, env per stage).
+- **Real car data import**: `server/scripts/import.ts` pulling from the free NHTSA vPIC API (makes/models/body types/fuel types, no key needed) and/or a Kaggle dataset CSV; images from openly licensed sources (Wikimedia Commons). Validate rows through the same zod car schema before insert. Prefer these over scraping listing sites (ToS/anti-bot problems). Add a small delay between API calls (e.g. ~1 req/sec) to be polite to the free public API and stay within any published rate limits — throttle out of courtesy, and respect each source's ToS/robots.
