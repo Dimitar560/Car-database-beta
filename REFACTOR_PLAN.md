@@ -169,6 +169,7 @@ End-to-end (`@playwright/test`, root-level `e2e/` package; script `"e2e": "playw
 3. Delete legacy: root `server.js`, `src/`, `public/`, root `package.json` CRA deps (either delete root package.json or reduce it to workspace scripts).
 4. Update/write root `README.md` with run instructions.
 5. Root `AGENTS.md` already exists (created during Phase 1) — extend its client section once Phase 2 lands rather than creating it fresh. Keep any project-specific `CLAUDE.md` as a thin pointer to it rather than duplicating content.
+6. `server/LEARNING.md` already exists (a from-scratch explainer of the server code/concepts/dependencies for the project owner, who has limited Node background). Write a matching `client/LEARNING.md` once Phase 2 lands, same spirit: explain React/Vite/TypeScript/React Query/the feature-folder structure using the actual code just written, not generic tutorials.
 
 Keep commits small: one per phase minimum. Do not commit `.env` or `node_modules`.
 
