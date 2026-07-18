@@ -1,11 +1,6 @@
-import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
-import { dirname, join } from "node:path";
-import { parse } from "yaml";
 import listEndpoints from "express-list-endpoints";
 import { createApp } from "../src/app.js";
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
+import { generateOpenApiDocument } from "../src/openapi/document.js";
 
 type Route = { method: string; path: string };
 
@@ -28,12 +23,9 @@ const expressRoutes: Route[] = listEndpoints(app)
     }))
   );
 
-const openapiSpec = parse(readFileSync(join(__dirname, "../src/openapi.yaml"), "utf-8")) as {
-  paths: Record<string, Record<string, unknown>>;
-};
-
-const openapiRoutes: Route[] = Object.entries(openapiSpec.paths).flatMap(([path, methods]) =>
-  Object.keys(methods).map((method) => ({
+const document = generateOpenApiDocument();
+const openapiRoutes: Route[] = Object.entries(document.paths ?? {}).flatMap(([path, methods]) =>
+  Object.keys(methods as object).map((method) => ({
     method: method.toUpperCase(),
     path: normalizePath(path),
   }))
@@ -48,14 +40,14 @@ const stale = [...openapiKeys].filter((k) => !expressKeys.has(k));
 
 if (undocumented.length || stale.length) {
   if (undocumented.length) {
-    console.error("Routes missing from openapi.yaml:");
+    console.error("Routes registered in Express but missing a registry.registerPath() call:");
     undocumented.forEach((k) => console.error(`  ${k}`));
   }
   if (stale.length) {
-    console.error("openapi.yaml documents routes that no longer exist:");
+    console.error("openapi/paths.ts documents routes that no longer exist in Express:");
     stale.forEach((k) => console.error(`  ${k}`));
   }
   process.exit(1);
 }
 
-console.log(`OpenAPI spec covers all ${expressKeys.size} routes.`);
+console.log(`OpenAPI document covers all ${expressKeys.size} routes.`);

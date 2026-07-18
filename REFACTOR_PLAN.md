@@ -58,9 +58,9 @@ server/src/
 
 Session: `express-session` + `connect-mongo` store, secret from env. CORS: `origin: process.env.CLIENT_ORIGIN, credentials: true`.
 
-**API docs**: hand-written `src/openapi.yaml` (OpenAPI 3.0) covering all routes, served at `/api/docs` via `swagger-ui-express` (mounted in `app.ts`). `npm run build` copies the yaml into `dist/` alongside the compiled JS since `tsc` doesn't do that itself.
+**API docs — generated from code, not hand-written**: zod schemas in `src/validation/` carry `.openapi(...)` metadata (via `@asteasolutions/zod-to-openapi`, wrapped in `src/lib/zod.ts` — the one place `zod` itself is imported/extended). `src/openapi/paths.ts` registers each route against those schemas; `src/openapi/document.ts` builds the OpenAPI document at runtime and serves it at `/api/docs` via `swagger-ui-express`. This makes spec drift structurally harder — the schema used to validate a request is the same one that documents it.
 
-**Keeping the spec in sync (automated)**: `scripts/check-openapi-coverage.ts` builds the real Express app, lists its actual routes via `express-list-endpoints`, and diffs that against `openapi.yaml`'s paths — fails if a route is undocumented or the doc references a route that no longer exists. `npm run docs:lint` runs `@redocly/cli lint` for spec correctness (security defined per operation, valid schema refs, etc). `npm run docs:check` runs both; wire this into CI in Phase 2.5 alongside the other checks so a route change with no matching spec update fails the build.
+**Automated safety net on top of that**: `npm run docs:coverage` (`scripts/check-openapi-coverage.ts`) builds the real Express app, lists its actual routes via `express-list-endpoints`, and diffs that against the generated document's paths — fails if a route exists in Express but nobody called `registerPath()` for it (or vice versa). `npm run docs:lint` generates a static `openapi.generated.yaml` (gitignored build artifact) and runs `@redocly/cli lint` on it for spec correctness. `npm run docs:check` runs both; wired into CI in Phase 2.5 so a route change with no matching `registerPath()` call fails the build.
 
 **Validation**: add `zod` (server dep). Define `carSchema` in `src/validation/car.ts`; a tiny `validate(schema)` middleware parses `req.body` on POST/PATCH and returns 400 with the issues. Never spread raw `req.body` into a query.
 
@@ -168,6 +168,7 @@ End-to-end (`@playwright/test`, root-level `e2e/` package; script `"e2e": "playw
 2. Verify: `npm test` and `tsc --noEmit` pass in both `server/` and `client/`; then end-to-end: `cd server && npm i && npm run dev` + `cd client && npm i && npm run dev`; register, login, create/edit/delete a car, search/filter, logout, confirm write routes return 401 when logged out (curl).
 3. Delete legacy: root `server.js`, `src/`, `public/`, root `package.json` CRA deps (either delete root package.json or reduce it to workspace scripts).
 4. Update/write root `README.md` with run instructions.
+5. Root `AGENTS.md` already exists (created during Phase 1) — extend its client section once Phase 2 lands rather than creating it fresh. Keep any project-specific `CLAUDE.md` as a thin pointer to it rather than duplicating content.
 
 Keep commits small: one per phase minimum. Do not commit `.env` or `node_modules`.
 

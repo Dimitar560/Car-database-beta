@@ -17,9 +17,9 @@ cp .env.example .env   # fill in a real SESSION_SECRET
 - `npm run typecheck` — `tsc --noEmit`
 - `npm run seed` — insert sample cars if the `cars` collection is empty
 - `npm run migrate` — one-time conversion of legacy boolean-field car documents into the new `fuelTypes`/`bodyStyles` array schema
-- `npm run docs:check` — verify `src/openapi.yaml` is valid and covers every registered route (fails the build if they drift)
+- `npm run docs:check` — lint the generated OpenAPI spec and verify it covers every registered Express route (fails if they drift)
 - `npm run audit` — `npm audit`
 
 ## API docs
 
-Swagger UI is served at `/api/docs` while the server is running.
+The OpenAPI spec is generated from the zod validation schemas (`src/validation/`) at runtime — nothing is hand-written. Swagger UI is served at `/api/docs` while the server is running. Adding a route means also registering it in `src/openapi/paths.ts`; `npm run docs:check` catches it if you forget.

@@ -1,14 +1,13 @@
 import { Router } from "express";
 import passport from "../config/passport.js";
 import { UserModel } from "../models/User.js";
+import { validate } from "../middleware/validate.js";
+import { credentialsSchema } from "../validation/auth.js";
 
 const router = Router();
 
-router.post("/register", async (req, res) => {
-  const { username, password } = req.body ?? {};
-  if (!username || !password) {
-    return res.status(400).json({ error: "username and password required" });
-  }
+router.post("/register", validate(credentialsSchema), async (req, res) => {
+  const { username, password } = req.body;
   try {
     const user = await UserModel.register(new UserModel({ username }), password);
     req.login(user, (err) => {
@@ -22,7 +21,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.post("/login", (req, res, next) => {
+router.post("/login", validate(credentialsSchema), (req, res, next) => {
   passport.authenticate("local", (err: Error | null, user: Express.User | false) => {
     if (err) return next(err);
     if (!user) return res.status(401).json({ error: "Wrong username or password" });

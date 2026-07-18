@@ -3,16 +3,10 @@ import cors from "cors";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import swaggerUi from "swagger-ui-express";
-import { parse } from "yaml";
-import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
-import { dirname, join } from "node:path";
 import passport from "./config/passport.js";
 import carsRouter from "./routes/cars.js";
 import authRouter from "./routes/auth.js";
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const openapiDocument = parse(readFileSync(join(__dirname, "openapi.yaml"), "utf-8"));
+import { generateOpenApiDocument } from "./openapi/document.js";
 
 export function createApp(opts: {
   sessionSecret: string;
@@ -44,7 +38,7 @@ export function createApp(opts: {
 
   app.use("/api/cars", carsRouter);
   app.use("/api/auth", authRouter);
-  app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(openapiDocument));
+  app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(generateOpenApiDocument()));
 
   return app;
 }

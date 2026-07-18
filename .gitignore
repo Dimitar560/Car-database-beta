@@ -9,6 +9,7 @@ client/.env
 # build output
 server/dist/
 client/dist/
+server/openapi.generated.yaml
 
 # storybook
 client/storybook-static/

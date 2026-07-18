@@ -6,7 +6,7 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "tsc && node -e \"require('fs').copyFileSync('src/openapi.yaml','dist/openapi.yaml')\"",
+    "build": "tsc",
     "start": "node dist/index.js",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -14,11 +14,13 @@
     "seed": "tsx scripts/seed.ts",
     "migrate": "tsx scripts/migrate.ts",
     "audit": "npm audit",
-    "docs:lint": "redocly lint src/openapi.yaml",
+    "docs:generate": "tsx scripts/generate-openapi-file.ts",
+    "docs:lint": "npm run docs:generate && redocly lint openapi.generated.yaml",
     "docs:coverage": "tsx scripts/check-openapi-coverage.ts",
     "docs:check": "npm run docs:lint && npm run docs:coverage"
   },
   "dependencies": {
+    "@asteasolutions/zod-to-openapi": "^7.3.4",
     "connect-mongo": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
