@@ -58,6 +58,10 @@ server/src/
 
 Session: `express-session` + `connect-mongo` store, secret from env. CORS: `origin: process.env.CLIENT_ORIGIN, credentials: true`.
 
+**API docs**: hand-written `src/openapi.yaml` (OpenAPI 3.0) covering all routes, served at `/api/docs` via `swagger-ui-express` (mounted in `app.ts`). `npm run build` copies the yaml into `dist/` alongside the compiled JS since `tsc` doesn't do that itself.
+
+**Keeping the spec in sync (automated)**: `scripts/check-openapi-coverage.ts` builds the real Express app, lists its actual routes via `express-list-endpoints`, and diffs that against `openapi.yaml`'s paths — fails if a route is undocumented or the doc references a route that no longer exists. `npm run docs:lint` runs `@redocly/cli lint` for spec correctness (security defined per operation, valid schema refs, etc). `npm run docs:check` runs both; wire this into CI in Phase 2.5 alongside the other checks so a route change with no matching spec update fails the build.
+
 **Validation**: add `zod` (server dep). Define `carSchema` in `src/validation/car.ts`; a tiny `validate(schema)` middleware parses `req.body` on POST/PATCH and returns 400 with the issues. Never spread raw `req.body` into a query.
 
 **Seed script** `server/scripts/seed.ts`: inserts 3–4 sample cars (reuse data shapes from `src/javaScript/carouselItems.js`) so a fresh DB isn't empty; script `"seed": "tsx scripts/seed.ts"`.
@@ -150,12 +154,13 @@ End-to-end (`@playwright/test`, root-level `e2e/` package; script `"e2e": "playw
 ## Phase 2.5 — Automations
 
 1. **Root workspaces**: reduce root `package.json` to `"workspaces": ["client", "server"]` with scripts `dev` (run both via `concurrently`), `test`, `lint`, `typecheck` fanning out to both packages.
-2. **Lint/format**: ESLint (flat config, typescript-eslint) + Prettier in both packages; `lint` and `format` scripts. Fix everything it flags during the port, not after.
-3. **Pre-commit hook**: `husky` + `lint-staged` at the root — on commit run Prettier + ESLint on staged files and `tsc --noEmit` per touched package.
+2. **Lint/format**: `biome` (single tool, replaces ESLint + Prettier) at the root with one `biome.json`, covering both `client/` and `server/`; `lint` and `format` scripts (`biome check`, `biome format --write`). Fix everything it flags during the port, not after.
+3. **Pre-commit hook**: `husky` + `lint-staged` at the root — on commit run `biome check --write` on staged files and `tsc --noEmit` per touched package.
 4. **Storybook** (client): `npx storybook@latest init` (auto-detects Vite). Write stories only for the hand-rolled shared UI components — `CarCard`, `Carousel`, `CarForm`, `NavBar`, buttons/inputs — one story per meaningful state (e.g. CarCard logged-in vs logged-out, CarForm empty vs prefilled for edit). No stories for pages or route-level components; they need routing/API context and aren't worth mocking. Script `"storybook": "storybook dev -p 6006"`.
-5. **CI**: `.github/workflows/ci.yml` — on push/PR: checkout, setup-node 22 with npm cache, `npm ci`, then per package: lint, `tsc --noEmit`, `vitest run`, and `vite build` for the client. Matrix or two jobs (client/server) — keep it under ~40 lines.
+5. **CI**: `.github/workflows/ci.yml` — on push/PR: checkout, setup-node 22 with npm cache, `npm ci`, then per package: lint, `tsc --noEmit`, `vitest run`, `vite build` for the client, and `npm run docs:check` for the server. Matrix or two jobs (client/server) — keep it under ~40 lines.
+6. **Dependency sanitization**: every dependency added in this refactor is a widely-used, actively-maintained package pinned via `npm install` (lockfile committed) — no unvetted/low-download packages. Run `npm audit` in both `client/` and `server/` after each install batch and again at Phase 3; fix or replace anything at high/critical severity before moving on (`npm audit fix`, or swap the package if unfixable). Add `.github/dependabot.yml` (npm ecosystem, `client/` and `server/` directories, weekly) so future dependency updates get automated PRs with their own CI run instead of drifting silently like the original CRA deps did.
 
-**🛑 CHECKPOINT 4 — automations done.** Verify: pre-commit hook fires, CI green on the pushed branch, Storybook opens. Commit. STOP — Phase 3 deletes the legacy code, so the user must explicitly approve continuing.
+**🛑 CHECKPOINT 4 — automations done.** Verify: pre-commit hook fires, CI green on the pushed branch, Storybook opens, `npm audit` clean (or documented exceptions) in both packages, Dependabot config present. Commit. STOP — Phase 3 deletes the legacy code, so the user must explicitly approve continuing.
 
 ## Phase 3 — Cleanup & verify
 

@@ -1,0 +1,205 @@
+openapi: 3.0.3
+info:
+  title: Car Showroom API
+  version: 1.0.0
+  description: Cars catalog + session-based auth.
+  license:
+    name: UNLICENSED
+servers:
+  - url: /api
+components:
+  securitySchemes:
+    sessionCookie:
+      type: apiKey
+      in: cookie
+      name: connect.sid
+  schemas:
+    Car:
+      type: object
+      properties:
+        _id: { type: string }
+        src: { type: string }
+        title: { type: string }
+        shortDesc: { type: string }
+        priceFrom: { type: number }
+        priceTo: { type: number }
+        fuelTypes:
+          type: array
+          items: { type: string, enum: [petrol, diesel, electric] }
+        bodyStyles:
+          type: array
+          items: { type: string, enum: [sedan, coupe, wagon, hatchback, suv, minivan, pickup] }
+    CarInput:
+      type: object
+      required: [src, title, shortDesc, priceFrom, priceTo]
+      properties:
+        src: { type: string }
+        title: { type: string }
+        shortDesc: { type: string }
+        priceFrom: { type: number }
+        priceTo: { type: number }
+        fuelTypes:
+          type: array
+          items: { type: string, enum: [petrol, diesel, electric] }
+        bodyStyles:
+          type: array
+          items: { type: string, enum: [sedan, coupe, wagon, hatchback, suv, minivan, pickup] }
+    User:
+      type: object
+      properties:
+        id: { type: string }
+        username: { type: string }
+    Credentials:
+      type: object
+      required: [username, password]
+      properties:
+        username: { type: string }
+        password: { type: string }
+    Error:
+      type: object
+      properties:
+        error: {}
+paths:
+  /cars:
+    get:
+      operationId: listCars
+      summary: List all cars
+      security: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Car" }
+    post:
+      operationId: createCar
+      summary: Create a car
+      security: [{ sessionCookie: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/CarInput" }
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Car" }
+        "400": { description: Validation error, content: { application/json: { schema: { $ref: "#/components/schemas/Error" } } } }
+        "401": { description: Not authenticated, content: { application/json: { schema: { $ref: "#/components/schemas/Error" } } } }
+  /cars/{id}:
+    get:
+      operationId: getCar
+      summary: Get a car by id
+      security: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Car" }
+        "404": { description: Not found }
+    patch:
+      operationId: updateCar
+      summary: Update a car
+      security: [{ sessionCookie: [] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/CarInput" }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Car" }
+        "401": { description: Not authenticated }
+        "404": { description: Not found }
+    delete:
+      operationId: deleteCar
+      summary: Delete a car
+      security: [{ sessionCookie: [] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "204": { description: Deleted }
+        "401": { description: Not authenticated }
+        "404": { description: Not found }
+  /auth/register:
+    post:
+      operationId: register
+      summary: Register a new user and log them in
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/Credentials" }
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user: { $ref: "#/components/schemas/User" }
+        "409": { description: Username already exists }
+  /auth/login:
+    post:
+      operationId: login
+      summary: Log in
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/Credentials" }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user: { $ref: "#/components/schemas/User" }
+        "401": { description: Wrong username or password }
+  /auth/logout:
+    post:
+      operationId: logout
+      summary: Log out (no-op if not currently authenticated)
+      security: []
+      responses:
+        "204": { description: Logged out }
+  /auth/me:
+    get:
+      operationId: getCurrentUser
+      summary: Get the current session's user
+      security: [{ sessionCookie: [] }]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user: { $ref: "#/components/schemas/User" }
+        "401": { description: Not authenticated }

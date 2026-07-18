@@ -3,10 +3,20 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "dev": "nodemon src/index.js",
-    "start": "node src/index.js"
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc && node -e \"require('fs').copyFileSync('src/openapi.yaml','dist/openapi.yaml')\"",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "seed": "tsx scripts/seed.ts",
+    "migrate": "tsx scripts/migrate.ts",
+    "audit": "npm audit",
+    "docs:lint": "redocly lint src/openapi.yaml",
+    "docs:coverage": "tsx scripts/check-openapi-coverage.ts",
+    "docs:check": "npm run docs:lint && npm run docs:coverage"
   },
   "dependencies": {
     "connect-mongo": "^5.1.0",
@@ -17,9 +27,27 @@
     "mongoose": "^8.9.0",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
-    "passport-local-mongoose": "^8.0.0"
+    "passport-local-mongoose": "^8.0.0",
+    "swagger-ui-express": "^5.0.1",
+    "yaml": "^2.9.0",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.9"
+    "@redocly/cli": "^2.39.0",
+    "@types/connect-mongo": "^3.1.3",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/express-list-endpoints": "^6.0.3",
+    "@types/express-session": "^1.18.0",
+    "@types/passport": "^1.0.17",
+    "@types/passport-local": "^1.0.38",
+    "@types/supertest": "^6.0.2",
+    "@types/swagger-ui-express": "^4.1.8",
+    "express-list-endpoints": "^7.1.1",
+    "mongodb-memory-server": "^10.1.2",
+    "supertest": "^7.0.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^4.1.10"
   }
 }
