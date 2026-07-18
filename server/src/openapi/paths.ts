@@ -2,7 +2,8 @@ import type { ZodTypeAny } from "zod";
 import { z } from "../lib/zod.js";
 import { registry } from "./registry.js";
 import { carSchema, carUpdateSchema, carResponseSchema } from "../validation/car.js";
-import { credentialsSchema, userResponseSchema, errorResponseSchema } from "../validation/auth.js";
+import { credentialsSchema, userResponseSchema } from "../validation/auth.js";
+import { errorResponseSchema } from "../validation/error.js";
 
 const idParam = z.object({ id: z.string().openapi({ example: "665f1c2e8b3a1a2b3c4d5e6f" }) });
 
@@ -28,8 +29,8 @@ registry.registerPath({
   request: { body: { content: json(carSchema) } },
   responses: {
     201: { description: "Created", content: json(carResponseSchema) },
-    400: { description: "Validation error", content: json(errorResponseSchema) },
-    401: { description: "Not authenticated", content: json(errorResponseSchema) },
+    400: { description: "Validation error (code: VALIDATION_ERROR)", content: json(errorResponseSchema) },
+    401: { description: "Not authenticated (code: NOT_AUTHENTICATED)", content: json(errorResponseSchema) },
   },
 });
 
@@ -41,7 +42,8 @@ registry.registerPath({
   request: { params: idParam },
   responses: {
     200: { description: "OK", content: json(carResponseSchema) },
-    404: { description: "Not found" },
+    400: { description: "Malformed id (code: INVALID_ID)", content: json(errorResponseSchema) },
+    404: { description: "Not found (code: NOT_FOUND)", content: json(errorResponseSchema) },
   },
 });
 
@@ -53,8 +55,12 @@ registry.registerPath({
   request: { params: idParam, body: { content: json(carUpdateSchema) } },
   responses: {
     200: { description: "OK", content: json(carResponseSchema) },
-    401: { description: "Not authenticated" },
-    404: { description: "Not found" },
+    400: {
+      description: "Validation error or malformed id (code: VALIDATION_ERROR / INVALID_ID)",
+      content: json(errorResponseSchema),
+    },
+    401: { description: "Not authenticated (code: NOT_AUTHENTICATED)", content: json(errorResponseSchema) },
+    404: { description: "Not found (code: NOT_FOUND)", content: json(errorResponseSchema) },
   },
 });
 
@@ -66,8 +72,9 @@ registry.registerPath({
   request: { params: idParam },
   responses: {
     204: { description: "Deleted" },
-    401: { description: "Not authenticated" },
-    404: { description: "Not found" },
+    400: { description: "Malformed id (code: INVALID_ID)", content: json(errorResponseSchema) },
+    401: { description: "Not authenticated (code: NOT_AUTHENTICATED)", content: json(errorResponseSchema) },
+    404: { description: "Not found (code: NOT_FOUND)", content: json(errorResponseSchema) },
   },
 });
 
@@ -82,8 +89,8 @@ registry.registerPath({
       description: "Created",
       content: json(z.object({ user: userResponseSchema })),
     },
-    400: { description: "Validation error", content: json(errorResponseSchema) },
-    409: { description: "Username already exists", content: json(errorResponseSchema) },
+    400: { description: "Validation error (code: VALIDATION_ERROR)", content: json(errorResponseSchema) },
+    409: { description: "Username already exists (code: USERNAME_TAKEN)", content: json(errorResponseSchema) },
   },
 });
 
@@ -95,8 +102,12 @@ registry.registerPath({
   request: { body: { content: json(credentialsSchema) } },
   responses: {
     200: { description: "OK", content: json(z.object({ user: userResponseSchema })) },
-    400: { description: "Validation error", content: json(errorResponseSchema) },
-    401: { description: "Wrong username or password", content: json(errorResponseSchema) },
+    400: { description: "Validation error (code: VALIDATION_ERROR)", content: json(errorResponseSchema) },
+    401: {
+      description:
+        "Wrong username or password (code: INVALID_CREDENTIALS) — deliberately generic to avoid revealing which usernames exist",
+      content: json(errorResponseSchema),
+    },
   },
 });
 
@@ -117,6 +128,6 @@ registry.registerPath({
   security: [{ sessionCookie: [] }],
   responses: {
     200: { description: "OK", content: json(z.object({ user: userResponseSchema })) },
-    401: { description: "Not authenticated", content: json(errorResponseSchema) },
+    401: { description: "Not authenticated (code: NOT_AUTHENTICATED)", content: json(errorResponseSchema) },
   },
 });

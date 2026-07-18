@@ -49,10 +49,17 @@ describe("GET /api/cars", () => {
     expect(res.body).toEqual([]);
   });
 
-  it("404s on an unknown id", async () => {
+  it("404s with a NOT_FOUND code on a well-formed but unknown id", async () => {
     const fakeId = new mongoose.Types.ObjectId().toString();
     const res = await request(app).get(`/api/cars/${fakeId}`);
     expect(res.status).toBe(404);
+    expect(res.body.error.code).toBe("NOT_FOUND");
+  });
+
+  it("400s with an INVALID_ID code on a malformed id, distinct from NOT_FOUND", async () => {
+    const res = await request(app).get("/api/cars/not-a-valid-object-id");
+    expect(res.status).toBe(400);
+    expect(res.body.error.code).toBe("INVALID_ID");
   });
 });
 

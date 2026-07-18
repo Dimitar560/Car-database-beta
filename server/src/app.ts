@@ -7,6 +7,8 @@ import passport from "./config/passport.js";
 import carsRouter from "./routes/cars.js";
 import authRouter from "./routes/auth.js";
 import { generateOpenApiDocument } from "./openapi/document.js";
+import { errorHandler } from "./middleware/errorHandler.js";
+import { requestId } from "./middleware/requestId.js";
 
 export function createApp(opts: {
   sessionSecret: string;
@@ -15,6 +17,7 @@ export function createApp(opts: {
 }) {
   const app = express();
 
+  app.use(requestId);
   app.use(express.json());
   app.use(
     cors({
@@ -39,6 +42,8 @@ export function createApp(opts: {
   app.use("/api/cars", carsRouter);
   app.use("/api/auth", authRouter);
   app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(generateOpenApiDocument()));
+
+  app.use(errorHandler);
 
   return app;
 }

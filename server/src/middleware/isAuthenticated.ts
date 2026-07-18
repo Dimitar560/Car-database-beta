@@ -1,8 +1,9 @@
 import type { Request, Response, NextFunction } from "express";
+import { AppError } from "../lib/AppError.js";
 
-export function isAuthenticated(req: Request, res: Response, next: NextFunction) {
+export function isAuthenticated(req: Request, _res: Response, next: NextFunction) {
   if (req.isAuthenticated()) {
     return next();
   }
-  res.status(401).json({ error: "Not authenticated" });
+  next(new AppError("NOT_AUTHENTICATED", 401, "Not authenticated"));
 }

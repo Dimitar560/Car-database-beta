@@ -13,9 +13,3 @@ export const userResponseSchema = z
     username: z.string(),
   })
   .openapi("User");
-
-export const errorResponseSchema = z
-  .object({
-    error: z.string().openapi({ example: "Not authenticated" }),
-  })
-  .openapi("Error");

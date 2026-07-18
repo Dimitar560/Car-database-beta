@@ -189,6 +189,41 @@ registry.registerPath({
 
 ---
 
+## 6b. Structured errors, and a real bug this fixes
+
+Every error response now has the same shape: `{ error: { code, message, details? } }`, e.g. `{"error":{"code":"NOT_FOUND","message":"Car not found"}}`. `code` is a stable string a frontend can branch on (`if (code === "NOT_AUTHENTICATED") redirectToLogin()`) instead of parsing a human sentence.
+
+`src/lib/AppError.ts` is a small custom error class carrying a `code` and HTTP `status`. Routes throw it:
+
+```ts
+if (!car) {
+  throw new AppError("NOT_FOUND", 404, "Car not found");
+}
+```
+
+`src/middleware/errorHandler.ts` is a **central catch point** — an Express middleware with a special 4-argument signature `(err, req, res, next)` that Express recognizes as "call this whenever any route calls `next(err)` or throws." One place decides how every error becomes JSON, instead of every route handler repeating `res.status(...).json({ error: ... })` slightly differently (which is what the original app did, inconsistently, when it remembered to send a response at all).
+
+Two error cases previously lumped together as one generic 404 are now distinguished:
+- `GET /api/cars/not-a-real-id` (garbage, not even a valid MongoDB id format) → `400 INVALID_ID`
+- `GET /api/cars/665f1c2e8b3a1a2b3c4d5e6f` (valid id format, but no such car) → `404 NOT_FOUND`
+
+For genuinely unexpected errors (a bug, the database being unreachable), the client only ever sees a generic `500 INTERNAL_ERROR` — the *real* error text is logged server-side only (`console.error`), tagged with a `requestId` (a random ID generated per-request by `src/middleware/requestId.ts`) that also comes back in the error response, so you can match "a user says they saw an error" to the exact server log line without ever exposing internals like a database connection string to the browser.
+
+**A deliberate exception**: login (`POST /api/auth/login`) always returns the same generic `INVALID_CREDENTIALS` whether the username doesn't exist or the password is wrong. This is intentional — if the server said "no such user" specifically, an attacker could try many usernames and learn which ones are real accounts (this is called *username enumeration*). Every other error in the API is as specific as it can safely be; this one case is the exception, on purpose.
+
+### The bug this incidentally fixes
+
+The original `cars.ts` route handlers were plain `async` functions with no `try`/`catch`. In Express 4 (unlike Express 5), if an `async` handler's promise rejects — e.g. the database call fails — **Express does not catch it automatically**. The request would simply hang forever with no response, and the failure would only show up as an "unhandled promise rejection" warning in the server console. `src/lib/asyncHandler.ts` wraps every async route handler so a rejected promise is forwarded to `errorHandler` properly:
+
+```ts
+router.get("/", asyncHandler(async (_req, res) => {
+  const cars = await CarModel.find();  // if this rejects, asyncHandler catches it
+  res.json(cars);
+}));
+```
+
+---
+
 ## 7. Authentication with sessions
 
 **Sessions**, at a glance: the server creates a record ("session") saying "this browser is logged in as user X," stores it in MongoDB (via `connect-mongo`), and gives the browser a cookie containing only the session's ID. On every later request, the browser sends that cookie back, and the server looks up the session to know who's asking.
