@@ -133,6 +133,11 @@ Client (`vitest` + `@testing-library/react` + `@testing-library/user-event` + `m
 - `ProtectedRoute`: redirects to `/userform` when `me` returns 401.
 - Keep it lean — test the refactored/logic-bearing pieces above, not every presentational component.
 
+End-to-end (`@playwright/test`, root-level `e2e/` package; script `"e2e": "playwright test"`):
+- Runs against the real stack (start server + client, or `webServer` config in `playwright.config.ts` boots both). Use a throwaway test DB, not `autoDB`.
+- One happy-path spec: register → login → add a car via the form → see it in the list → open its detail page → edit → delete → logout. Plus one guard check: logged-out user can't reach `/postauto` (redirected).
+- In CI: add a job that installs Playwright browsers (`npx playwright install --with-deps`) and runs `e2e` after build. Keep to the flows above — E2E is slow, so don't duplicate what unit/integration tests already cover.
+
 ### Styling pass (after everything works)
 
 - Convert per-component CSS files to **CSS Modules** (`DataBase.module.css` etc.) so class names stop being global.
@@ -169,4 +174,4 @@ Do not implement any of these; they are planned as separate tasks after the refa
 - **Image upload** (multer or cloud storage) — images stay URL strings for now.
 - **Visual redesign** + replace `alert()` with toasts.
 - **Deployment** (hosting, Atlas, env per stage).
-- **Real car data import**: `server/scripts/import.ts` pulling from the free NHTSA vPIC API (makes/models/body types/fuel types, no key needed) and/or a Kaggle dataset CSV; images from openly licensed sources (Wikimedia Commons). Validate rows through the same zod car schema before insert. Prefer these over scraping listing sites (ToS/anti-bot problems). Add a small delay between API calls (e.g. ~1 req/sec) to be polite to the free public API and stay within any published rate limits — throttle out of courtesy, and respect each source's ToS/robots.
+- **Real car data import**: `server/scripts/import.ts` pulling from the free NHTSA vPIC API (makes/models/body types/fuel types, no key needed) and/or a Kaggle dataset CSV; images from openly licensed sources (Wikimedia Commons). Validate rows through the same zod car schema before insert. Prefer these over scraping listing sites (ToS/anti-bot problems). Add a small delay between API calls (e.g. ~1 req/sec) to be polite to the free public API and stay within any published rate limits — throttle out of courtesy, and respect each source's ToS/robots. Once the script works as a one-shot, it can be automated to refresh on a schedule (GitHub Actions cron, or a cron job on the deploy host) — idempotent upserts keyed on make+model+year so re-runs update rather than duplicate.
