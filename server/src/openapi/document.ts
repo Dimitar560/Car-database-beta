@@ -13,5 +13,9 @@ export function generateOpenApiDocument() {
       license: { name: "UNLICENSED" },
     },
     servers: [{ url: "/api" }],
+    tags: [
+      { name: "Cars", description: "Browse and manage the car catalog" },
+      { name: "Auth", description: "Register, log in, log out, and check the current session" },
+    ],
   });
 }

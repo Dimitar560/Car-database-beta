@@ -14,6 +14,7 @@ const json = (schema: ZodTypeAny) => ({
 registry.registerPath({
   method: "get",
   path: "/cars",
+  tags: ["Cars"],
   summary: "List all cars",
   security: [],
   responses: {
@@ -24,6 +25,7 @@ registry.registerPath({
 registry.registerPath({
   method: "post",
   path: "/cars",
+  tags: ["Cars"],
   summary: "Create a car",
   security: [{ sessionCookie: [] }],
   request: { body: { content: json(carSchema) } },
@@ -37,6 +39,7 @@ registry.registerPath({
 registry.registerPath({
   method: "get",
   path: "/cars/{id}",
+  tags: ["Cars"],
   summary: "Get a car by id",
   security: [],
   request: { params: idParam },
@@ -50,6 +53,7 @@ registry.registerPath({
 registry.registerPath({
   method: "patch",
   path: "/cars/{id}",
+  tags: ["Cars"],
   summary: "Update a car",
   security: [{ sessionCookie: [] }],
   request: { params: idParam, body: { content: json(carUpdateSchema) } },
@@ -67,6 +71,7 @@ registry.registerPath({
 registry.registerPath({
   method: "delete",
   path: "/cars/{id}",
+  tags: ["Cars"],
   summary: "Delete a car",
   security: [{ sessionCookie: [] }],
   request: { params: idParam },
@@ -81,6 +86,7 @@ registry.registerPath({
 registry.registerPath({
   method: "post",
   path: "/auth/register",
+  tags: ["Auth"],
   summary: "Register a new user and log them in",
   security: [],
   request: { body: { content: json(credentialsSchema) } },
@@ -97,6 +103,7 @@ registry.registerPath({
 registry.registerPath({
   method: "post",
   path: "/auth/login",
+  tags: ["Auth"],
   summary: "Log in",
   security: [],
   request: { body: { content: json(credentialsSchema) } },
@@ -114,6 +121,7 @@ registry.registerPath({
 registry.registerPath({
   method: "post",
   path: "/auth/logout",
+  tags: ["Auth"],
   summary: "Log out (no-op if not currently authenticated)",
   security: [],
   responses: {
@@ -124,6 +132,7 @@ registry.registerPath({
 registry.registerPath({
   method: "get",
   path: "/auth/me",
+  tags: ["Auth"],
   summary: "Get the current session's user",
   security: [{ sessionCookie: [] }],
   responses: {
