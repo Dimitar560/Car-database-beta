@@ -144,8 +144,21 @@ End-to-end (`@playwright/test`, root-level `e2e/` package; script `"e2e": "playw
 
 ### Styling pass (after everything works)
 
-- Convert per-component CSS files to **CSS Modules** (`DataBase.module.css` etc.) so class names stop being global.
-- Deduplicate shared rules (form inputs, buttons, page titles like `.title-label`) into `src/styles/global.css` with a few CSS variables (colors, spacing) at `:root`.
+**Design tokens** — CSS custom properties organized by category, not one flat list, so the origin of any value is obvious at a glance:
+
+```
+client/src/styles/tokens/
+  colors.css      # --color-bg, --color-text, --color-primary, --color-border, --color-danger, ...
+  spacing.css     # --space-1 .. --space-8 (a scale, not ad-hoc px values)
+  layout.css      # --radius, --max-width, --card-width, breakpoints as custom media or documented px
+  index.css       # imports the above, applies them at :root
+```
+
+Values are pulled from what the original CSS actually used (`src/App.css`, `src/styles/*.css`) — this is an extraction pass, not a redesign; colors/spacing should look the same, just named and centralized instead of repeated as literals in ten files.
+
+**Structured for a future second theme, but only one theme built now** (per explicit decision — see `workflow/claudeContext/decisions/`): tokens are semantic (`--color-bg`, not `--color-white`) specifically so a `[data-theme="dark"]` override block *could* redefine them later without touching component CSS at all. No toggle, no dark palette, no theme-switching logic in this pass — that's future work if wanted.
+
+- Convert per-component CSS files to **CSS Modules** (`DataBase.module.css` etc.) so class names stop being global; modules reference the token variables, never hardcode a color/spacing value directly.
 - Card grid, navbar, buttons, form controls are own components styled with CSS Modules (no bootstrap); no inline `style` props.
 - Do not redesign — same look, cleaner code. Visual redesign is a separate future task.
 
