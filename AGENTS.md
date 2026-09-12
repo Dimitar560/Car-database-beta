@@ -2,6 +2,8 @@
 
 Guidance for AI coding agents (and humans) working in this repo. See `REFACTOR_PLAN.md` for the full rebuild plan and its execution status.
 
+**Cross-session/cross-project context lives outside this repo**, at `Development\claudeContext\` (a separate git repo, sibling to this project's parent folder) — not nested here on purpose, since it also covers other projects. Check `Development\claudeContext\car-database\` for this project's decisions/sessions/ongoing work, and the top-level `reminders/`/`ideas/` for cross-project conventions, before assuming a clean slate.
+
 ## Layout
 
 Two independent npm packages, no shared code between them:
