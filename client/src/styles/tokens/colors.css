@@ -1,0 +1,17 @@
+:root {
+  /* The original design is a two-color inversion: sections are either
+     "surface" (gold bg, dark text) or "surface-inverted" (dark bg, gold text). */
+  --color-surface: #f2aa4cff;
+  --color-surface-inverted: #101820ff;
+  --color-ink: #101820ff;
+  --color-ink-inverted: #f2aa4cff;
+
+  --color-white: #ffffff;
+  --color-success: green;
+
+  --color-hover-bg: rgb(230, 161, 59);
+  --color-hover-ink: rgb(51, 46, 40);
+  --color-hover-border: rgb(199, 164, 51);
+
+  --color-shadow: rgba(16, 24, 32, 0.349);
+}

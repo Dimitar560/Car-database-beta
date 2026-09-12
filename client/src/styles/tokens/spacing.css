@@ -1,0 +1,13 @@
+:root {
+  /* A scale for new/hand-rolled components (CarCard, Carousel, NavBar, ...).
+     Ported per-component CSS keeps its original percentage-based values —
+     this is an extraction pass, not a redesign. */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+}

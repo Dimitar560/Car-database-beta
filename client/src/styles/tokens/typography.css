@@ -1,0 +1,9 @@
+:root {
+  /* Loaded via index.html <link> (Google Fonts) — Helvetica/Arial fallback
+     if it fails to load or the request is blocked. */
+  --font-family-base: 'Poppins', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+}

@@ -1,0 +1,49 @@
+@import '../../styles/tokens/breakpoints.css';
+
+.slideContent {
+  position: relative;
+}
+
+.image {
+  height: 41rem;
+  width: 100%;
+  object-fit: cover;
+}
+
+.caption {
+  position: absolute;
+  bottom: var(--space-6);
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  padding: 0 var(--space-4);
+}
+
+.title,
+.text {
+  color: var(--color-ink-inverted);
+}
+
+@media (--tablet) {
+  .image {
+    height: 26rem;
+  }
+
+  .caption {
+    bottom: var(--space-4);
+  }
+}
+
+@media (--mobile) {
+  .image {
+    height: 16rem;
+  }
+
+  .title {
+    font-size: 1.25rem;
+  }
+
+  .text {
+    display: none;
+  }
+}

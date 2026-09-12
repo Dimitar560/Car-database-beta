@@ -1,0 +1,11 @@
+:root {
+  --radius-button: 30%;
+  --radius-card: 3%;
+  --radius-form: 20%;
+  /* Fixed (not %) so corners stay evenly rounded regardless of the
+     element's own width/height — percentages compute per-axis and look
+     uneven/elliptical on wide, short elements like photos. */
+  --radius-lg: 1rem;
+
+  --max-width-card: 18rem;
+}

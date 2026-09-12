@@ -1,0 +1,191 @@
+@import '../../styles/tokens/breakpoints.css';
+
+.navibar {
+  position: relative;
+  z-index: 30;
+  background-color: var(--color-surface-inverted);
+}
+
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 6rem;
+  padding: 0 var(--space-4);
+}
+
+.brand {
+  font-size: 3rem;
+  letter-spacing: 0.02em;
+  color: var(--color-ink-inverted);
+  cursor: default;
+  transition: ease-in-out 1s;
+  margin: 0;
+}
+
+.brand:hover {
+  color: var(--color-white);
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.link {
+  font-size: 1.25rem;
+  color: var(--color-ink-inverted);
+  text-decoration: none;
+  padding: var(--space-2) 0;
+  white-space: nowrap;
+}
+
+.link:hover,
+.link:active {
+  text-decoration: underline 3px solid var(--color-ink-inverted);
+  text-underline-offset: 5px;
+  transition: linear 1s;
+  color: var(--color-white);
+}
+
+.active {
+  color: var(--color-white);
+}
+
+.logoutButton {
+  color: var(--color-surface-inverted);
+  background-color: var(--color-ink-inverted);
+  border-radius: var(--radius-button);
+  width: 5rem;
+  outline: none;
+  height: 2.5rem;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.logoutButton:hover,
+.logoutButton:active {
+  background-color: var(--color-hover-bg);
+  color: var(--color-hover-ink);
+  border: var(--color-hover-border) 1px thin;
+}
+
+.backdrop {
+  display: none;
+}
+
+/* Tablet: stay expanded, just tighten spacing so the full row keeps fitting
+   comfortably rather than switching to a hamburger too early. */
+@media (--tablet) {
+  .bar {
+    min-height: 5rem;
+  }
+
+  .brand {
+    font-size: 2.25rem;
+  }
+
+  .links {
+    gap: var(--space-3);
+  }
+
+  .link {
+    font-size: 1.1rem;
+  }
+}
+
+/* Mobile only: links wrap onto their own full-width row below brand + the
+   hamburger button, collapsed unless open. */
+@media (--mobile) {
+  .bar {
+    min-height: 4.5rem;
+    padding: var(--space-2) var(--space-4);
+  }
+
+  .brand {
+    font-size: 1.5rem;
+  }
+
+  /* Overlays on top of the page instead of sitting in flow, so opening it
+     never pushes the content below (e.g. the carousel) down. Always mounted
+     (not display: none) so opacity/transform can actually animate; the
+     visibility delay keeps it out of the tab order and un-clickable while
+     closed without needing display toggling. */
+  .links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 25;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4) var(--space-4);
+    background-color: var(--color-surface-inverted);
+    box-shadow: 0 0.5rem 1rem var(--color-shadow);
+    max-height: calc(100vh - 4.5rem);
+    overflow-y: auto;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-0.5rem);
+    transition:
+      opacity 0.18s ease,
+      transform 0.18s ease,
+      visibility 0s linear 0.18s;
+  }
+
+  .linksOpen {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+    transition:
+      opacity 0.18s ease,
+      transform 0.18s ease;
+  }
+
+  .link {
+    padding: var(--space-2);
+    white-space: normal;
+  }
+
+  .logoutButton {
+    width: 100%;
+  }
+
+  /* Starts below the bar (not inset: 0) so the title and close button stay
+     fully visible and clickable, never dimmed or intercepted by the overlay.
+     Always mounted, same opacity/visibility animation approach as .links. */
+  .backdrop {
+    display: block;
+    position: fixed;
+    top: 4.5rem;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    padding: 0;
+    cursor: default;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      opacity 0.18s ease,
+      visibility 0s linear 0.18s;
+  }
+
+  .backdropOpen {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: opacity 0.18s ease;
+  }
+}

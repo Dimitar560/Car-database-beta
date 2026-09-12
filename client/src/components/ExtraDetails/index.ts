@@ -1,0 +1,1 @@
+export { ExtraDetails } from './ExtraDetails'

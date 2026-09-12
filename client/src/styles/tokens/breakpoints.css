@@ -1,0 +1,6 @@
+/* Real, enforced breakpoints (via postcss-preset-env's custom-media-queries
+   feature) — one definition, used everywhere as `@media (--mobile)` etc.,
+   instead of a magic number repeated in every CSS module. */
+@custom-media --mobile (max-width: 600px);
+@custom-media --tablet (max-width: 900px);
+@custom-media --desktop (min-width: 901px);

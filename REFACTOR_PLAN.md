@@ -1,6 +1,8 @@
 # Car Showroom — Restructure & Refactor Plan
 
-Goal: split the CRA monolith into `server/` (Express + Mongoose 8, TypeScript) and `client/` (Vite + React 18, TypeScript), fix known bugs, modernize deps, add tests. Old code stays in place (`server.js`, `src/`) as the porting source; delete it only in the final step.
+Goal: split the CRA monolith into `server/` (Express + Mongoose 8, TypeScript) and `client/` (Vite + React, TypeScript), fix known bugs, modernize deps, add tests. Old code stays in place (`server.js`, `src/`) as the porting source; delete it only in the final step.
+
+**Note (Phase 2):** the client was scaffolded with whatever `create-vite` currently ships as latest rather than pinning to the versions this plan was originally written against — React 19, react-router-dom 7, Vite 8, TypeScript 6, not "React 18"/"^6" as stated further down. Deliberate: modernizing dependencies was goal #1, and nothing in this app's actual code depends on an API those majors removed. Mentions of "React 18" / "react-router-dom@^6" below are historical intent, not what's installed.
 
 Already done: `server/package.json` and `server/.env.example` exist. Everything else below is TODO.
 

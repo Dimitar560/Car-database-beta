@@ -1,0 +1,66 @@
+.form {
+  margin: 7% 25% 13% 33%;
+}
+
+.inputText {
+  width: 33rem;
+  outline: none;
+  background-color: var(--color-surface-inverted);
+  color: var(--color-ink-inverted);
+}
+
+.form textarea {
+  outline: none;
+  background-color: var(--color-surface-inverted);
+  color: var(--color-ink-inverted);
+  resize: none;
+}
+
+.formFromTo {
+  margin-top: 3%;
+  width: 11.5rem;
+  margin-left: 2%;
+  margin-right: 2%;
+  outline: none;
+  background-color: var(--color-surface-inverted);
+  color: var(--color-ink-inverted);
+}
+
+.checkboxLabel {
+  margin-top: 2%;
+  padding-left: 2%;
+}
+
+.form button {
+  background-color: var(--color-surface-inverted);
+  color: var(--color-ink-inverted);
+  border-radius: var(--radius-button);
+  position: relative;
+  left: 34%;
+  top: 1rem;
+  width: 5rem;
+  outline: none;
+  height: 2.5rem;
+  border: var(--color-ink-inverted) 1px thin;
+}
+
+.form button:hover,
+.form button:active {
+  background-color: rgb(32, 30, 27);
+  color: rgb(231, 180, 112);
+  border: var(--color-surface-inverted) 1px thin;
+}
+
+@media (max-width: 600px) {
+  .inputText {
+    width: 12rem;
+  }
+
+  .form textarea {
+    width: 12rem;
+  }
+
+  .form button {
+    left: 27%;
+  }
+}

@@ -1,0 +1,60 @@
+@import './tokens/index.css';
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--color-surface);
+  color: var(--color-ink);
+  font-family: var(--font-family-base);
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.01em;
+}
+
+.title-label {
+  position: relative;
+  text-align: center;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  padding-bottom: var(--space-3);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.01em;
+}
+
+.title-label::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4rem;
+  height: 3px;
+  border-radius: 2px;
+  background-color: var(--color-surface-inverted);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-surface-inverted);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(242, 170, 76, 0.39);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

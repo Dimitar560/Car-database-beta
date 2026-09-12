@@ -1,0 +1,67 @@
+@import '../../styles/tokens/breakpoints.css';
+
+.menuToggle {
+  display: none;
+  position: relative;
+  width: 2.25rem;
+  height: 2.25rem;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.menuIcon,
+.menuIcon::before,
+.menuIcon::after {
+  position: absolute;
+  left: 50%;
+  width: 1.5rem;
+  height: 2px;
+  background-color: var(--color-ink-inverted);
+  transform: translateX(-50%);
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease,
+    top 0.2s ease;
+}
+
+.menuIcon {
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.menuIcon::before,
+.menuIcon::after {
+  content: '';
+}
+
+.menuIcon::before {
+  top: -0.5rem;
+}
+
+.menuIcon::after {
+  top: 0.5rem;
+}
+
+/* Open state: middle bar fades out, top/bottom bars rotate into an X. */
+.menuIconOpen {
+  background-color: transparent;
+}
+
+.menuIconOpen::before {
+  top: 0;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.menuIconOpen::after {
+  top: 0;
+  transform: translateX(-50%) rotate(-45deg);
+}
+
+@media (--mobile) {
+  .menuToggle {
+    display: block;
+  }
+}

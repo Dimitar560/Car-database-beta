@@ -1,0 +1,81 @@
+@import '../../styles/tokens/breakpoints.css';
+
+.extraDetails {
+  background: linear-gradient(90deg, var(--color-surface-inverted) 50%, var(--color-surface) 50%);
+  padding: 5%;
+}
+
+.title {
+  color: var(--color-ink-inverted);
+  text-align: center;
+  padding-bottom: 5%;
+}
+
+.otherSide {
+  color: var(--color-surface-inverted);
+}
+
+.image {
+  width: 35%;
+  display: inline-block;
+  position: relative;
+  left: 4%;
+}
+
+.text {
+  display: inline-block;
+  position: relative;
+  width: 40%;
+  left: 23%;
+  text-align: left;
+  color: var(--color-surface-inverted);
+}
+
+@media (--tablet) {
+  .image {
+    width: 42%;
+    left: 2%;
+  }
+
+  .text {
+    width: 46%;
+    left: 12%;
+  }
+}
+
+@media (--mobile) {
+  .extraDetails {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    align-items: center;
+    background: var(--color-surface-inverted);
+  }
+
+  .title {
+    order: 0;
+    align-self: center;
+    padding-bottom: 5%;
+    left: 0;
+  }
+
+  .image {
+    order: 1;
+    width: 100%;
+    align-self: center;
+    padding-bottom: 2%;
+    left: 0;
+  }
+
+  .text {
+    order: 2;
+    color: var(--color-ink-inverted);
+    font-size: 20px;
+    left: 0;
+    width: 100%;
+  }
+
+  .otherSide {
+    color: var(--color-ink-inverted);
+  }
+}

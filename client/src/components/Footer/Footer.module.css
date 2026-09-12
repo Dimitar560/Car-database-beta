@@ -1,0 +1,44 @@
+.footer {
+  background-color: var(--color-surface-inverted);
+}
+
+.copyright {
+  color: var(--color-ink-inverted);
+  display: inline-block;
+  position: relative;
+  left: 44%;
+  padding-top: 2%;
+}
+
+.icon {
+  position: relative;
+  left: 85%;
+  padding-left: 1%;
+  padding-bottom: 2%;
+  filter: opacity(0.5) drop-shadow(0 0 0 var(--color-ink-inverted));
+}
+
+.iconFacebook:hover {
+  filter: opacity(0.5) drop-shadow(0 0 0 blue);
+}
+
+.iconInstagram:hover {
+  filter: opacity(0.5) drop-shadow(0 0 0 rgb(255, 0, 221));
+}
+
+.iconTwitter:hover {
+  filter: opacity(0.5) drop-shadow(0 0 0 rgb(0, 162, 255));
+}
+
+@media (max-width: 600px) {
+  .icon {
+    left: 40%;
+    padding-left: 1%;
+    padding-bottom: 11%;
+  }
+
+  .copyright {
+    left: 35%;
+    padding-top: 2%;
+  }
+}

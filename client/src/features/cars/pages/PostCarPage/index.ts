@@ -1,0 +1,1 @@
+export { PostCarPage } from './PostCarPage'

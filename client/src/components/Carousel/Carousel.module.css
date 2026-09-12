@@ -1,0 +1,61 @@
+.carousel {
+  position: relative;
+  width: 100%;
+}
+
+.track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.slide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+}
+
+.draggable {
+  cursor: grab;
+}
+
+/* Images (and anything else) inside a draggable track must not start the
+   browser's native "drag this image out" operation — that hijacks pointer
+   events partway through and breaks our own drag handling. */
+.track img {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+.dragging {
+  cursor: grabbing;
+  scroll-snap-type: none;
+  user-select: none;
+}
+
+.prev,
+.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  background: none;
+  border: none;
+  color: var(--color-ink-inverted);
+  font-size: 3rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: var(--space-2);
+}
+
+.prev {
+  left: var(--space-2);
+}
+
+.next {
+  right: var(--space-2);
+}

@@ -1,0 +1,60 @@
+.card {
+  box-shadow: var(--color-shadow) 0.5rem 0.6rem;
+  background-color: var(--color-surface-inverted);
+  color: var(--color-ink-inverted);
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  width: var(--max-width-card);
+  margin: 5% auto;
+}
+
+.image {
+  width: 100%;
+  height: 10rem;
+  object-fit: cover;
+  display: block;
+}
+
+.body {
+  padding: var(--space-4);
+}
+
+.title {
+  display: inline-block;
+  color: var(--color-ink-inverted);
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.title:hover,
+.title:active {
+  color: var(--color-white);
+}
+
+.desc {
+  margin-top: var(--space-2);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.actionButton {
+  color: var(--color-surface-inverted);
+  background-color: var(--color-ink-inverted);
+  border-radius: var(--radius-button);
+  width: 5rem;
+  outline: none;
+  height: 2.5rem;
+  border: none;
+}
+
+.actionButton:hover,
+.actionButton:active {
+  background-color: var(--color-hover-bg);
+  color: var(--color-hover-ink);
+  border: var(--color-hover-border) 1px thin;
+}

@@ -1,0 +1,53 @@
+.userForm {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 8% 35%;
+  background-color: var(--color-surface-inverted);
+  color: var(--color-ink-inverted);
+  box-shadow: var(--color-shadow) 0.5rem 0.6rem;
+  border-radius: var(--radius-form);
+  padding-bottom: 2%;
+}
+
+.userForm input {
+  margin-bottom: 5%;
+}
+
+.userForm label {
+  margin-bottom: 1%;
+  font-size: 1.3em;
+}
+
+.userForm h3 {
+  padding-top: 3%;
+}
+
+.errorText {
+  color: rgb(231, 105, 105);
+}
+
+.loginButton {
+  position: relative;
+  color: var(--color-surface-inverted);
+  background-color: var(--color-ink-inverted);
+  border-radius: var(--radius-button);
+  width: 10rem;
+  outline: none;
+  height: 2.7rem;
+}
+
+.loginButton:hover,
+.loginButton:active {
+  background-color: var(--color-hover-bg);
+  color: var(--color-hover-ink);
+  border: var(--color-hover-border) 1px thin;
+}
+
+@media (max-width: 600px) {
+  .userForm {
+    margin: 25% auto 0 auto;
+    width: 80%;
+  }
+}

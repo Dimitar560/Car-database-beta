@@ -1,0 +1,25 @@
+.slideContent {
+  min-height: 28rem;
+  background: var(--color-surface);
+  color: var(--color-surface-inverted);
+  box-sizing: border-box;
+  padding: 40px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.title {
+  font-size: 41px;
+  font-weight: 300;
+}
+
+.subtitle {
+  font-size: 21px;
+}
+
+.text {
+  font-size: 14px;
+  max-width: 40rem;
+  line-height: 1.3;
+}
